@@ -1,39 +1,46 @@
-# Azure End To End Data Pipeline SCD 1
+# Azure End-to-End Data Pipeline with SCD Type 1
 
-## Overview
+## Overview  
 
-⁠•This project follows **medalion arcitechture**
-•Car sales data is used, which is hosted on a **https** server.
-•The project uses **SCD Type 1**, and processes data incrementally.
-•Bronze Layer is maintained using **Azure Data Facory** and silver layer, gold layers are maintained    using Azure Databricks.
-•ADLS Gen 2 is used for storage.
-•Star Schema is maintained at the gold layer.
-•**Unity Catalog** is used for data governance and data centralization.
-•**Email Alerting** on success and failure
+- This project follows the **medallion architecture**.  
+- Car sales data is used, which is hosted on an **HTTPS** server.  
+- The project uses **SCD Type 1** and processes data incrementally.  
+- The **Bronze Layer** is maintained using **Azure Data Factory**, while the **Silver and Gold Layers** are managed using **Azure Databricks**.  
+- **ADLS Gen 2** is used for storage.  
+- A **Star Schema** is maintained at the Gold Layer.  
+- **Unity Catalog** is used for data governance and centralization.  
+- **Email alerts** are triggered on success and failure.  
 
-## Pipeline Flow
+## Pipeline Flow  
 
-![Architechture Diagram.png](Azure%20End%20To%20End%20Data%20Pipeline%20SCD%201%2017932cf3d883802d99ccd6e06e6e19a6/Architechture_Diagram.png)
+![Architecture Diagram](https://github.com/user-attachments/assets/8581c1e8-98fb-4273-807f-aa7e2f7e8dd5)  
 
-## Steps Followed
+## Steps Followed  
 
-### Bronze Layer
+### Bronze Layer  
 
-- Pulled the raw data from https source and save it the **Azure SQL Database** using **Azure Datafactory.**
-- Now the raw data is ingested incrementaly to **ADLS Gen 2** storage in parquet format using Azure Data Factory.
-- Stored procedures are used to ensure incremental load.
+- Pulled raw data from an **HTTPS** source and stored it in **Azure SQL Database** using **Azure Data Factory**.  
+- Incrementally ingested raw data into **ADLS Gen 2** storage in **Parquet format** using **Azure Data Factory**.  
+- Used **stored procedures** to ensure incremental loading.  
 
-### Silver Layer
+### Silver Layer  
 
-- Azure Databricks is used further to process the silver and gold layer, the raw data which is stored in Bronze layer is then cleaned by applying various transformation according to the business rules.
-- This data is then saved in the silver container in the Data Lake in delta format.
+- Processed the **Silver and Gold Layers** using **Azure Databricks**.  
+- Cleaned raw data from the Bronze Layer by applying various **business rule transformations**.  
+- Stored the transformed data in the **Silver container** in **Delta format**.  
 
-### Gold Layer
+### Gold Layer  
 
-- Various dimension tables are derived from the silver layer, all these dimension tables load the data incrementally using delta merge feauture.
-- Surrogate Keys are given for all the dimensions, which acts as the primary keys for the dimension tables.
-- Finally  fact table is created containing all the neessary metrics and their identifier keys which can be used for seemless reporting.
+- Derived **dimension tables** from the Silver Layer, loading them incrementally using **Delta Merge**.  
+- Assigned **Surrogate Keys** to all dimensions, serving as primary keys.  
+- Created a **fact table** containing all key metrics and identifiers for seamless reporting.  
 
-## Azure Data Factory and Databricks Workflow
+## Azure Data Factory and Databricks Workflow 
 
-![ADF Pipeline.png](Azure%20End%20To%20End%20Data%20Pipeline%20SCD%201%2017932cf3d883802d99ccd6e06e6e19a6/98607ccd-1c11-4428-886a-994c34cde85d.png)
+<img width="889" alt="ADF Pipeline" src="https://github.com/user-attachments/assets/45e0a5e8-9a52-4d22-86a1-a34f0a5099a2" />
+<img width="1235" alt="Screenshot 2025-02-01 at 3 02 35 PM" src="https://github.com/user-attachments/assets/f7b6a4f2-c18a-4406-8cf9-bd430d9f84e2" />
+<img width="1018" alt="Screenshot 2025-02-01 at 4 45 42 PM" src="https://github.com/user-attachments/assets/62b8c31e-4ac5-4c63-8a72-f6ebd0777710" />
+
+
+
+
